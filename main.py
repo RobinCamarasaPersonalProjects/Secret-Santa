@@ -12,16 +12,7 @@ def write_result(i, j, participants):
     file.write(participants[i] + ' doit offrir son cadeau à ' + participants[j])
 
 
-def is_not_good_permutation(array):
-    for i, j in enumerate(array):
-        if i == j:
-            return True
-    return False
-
-
 table = pandas.read_csv('./in/participants.csv')
 shuffle_index = np.random.permutation(np.arange(table.size))
-while is_not_good_permutation(shuffle_index):
-    shuffle_index = np.random.permutation(np.arange(table.size))
-for i, j in enumerate(shuffle_index):
-    write_result(i, j, table.get('participants'))
+for i in shuffle_index:
+    write_result(i, (i+1) % table.get('participants').size, table.get('participants'))
